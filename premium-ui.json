@@ -6,6 +6,6 @@
   "requiredCapabilities": ["Select/Listbox", "Scrollbar", "Toast", "Date"],
   "ownership": {"Select/Listbox": "native", "Date": "native"},
   "requiredCommands": ["unit", "browser"],
-  "commands": {"unit": "node --test tests/metrics.test.cjs", "browser": "node scripts/test-browser.cjs"},
-  "evidence": {"metrics": "tests/metrics.test.cjs", "failurePaths": "scripts/test-browser.cjs"}
+  "commands": {"unit": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs", "browser": "node scripts/test-journeys.cjs"},
+  "evidence": {"domain": "tests/lifecycle.test.cjs", "failurePaths": "scripts/test-journeys.cjs", "storage": "tests/storage.test.cjs"}
 }

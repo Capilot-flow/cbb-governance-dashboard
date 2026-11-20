@@ -1,27 +1,27 @@
 ---
 version: alpha
 colors:
-  primary: "#0B6A73"
-  primary-soft: "#E5F1F2"
-  bg: "#F3F6F9"
+  primary: "#0868C9"
+  primary-soft: "#EAF5FF"
+  bg: "#F5F7F9"
   surface: "#FFFFFF"
-  text: "#193344"
-  muted: "#5D7180"
-  line: "#DCE4EB"
-  nav: "#143747"
+  text: "#253746"
+  muted: "#647584"
+  line: "#DFE5EA"
+  nav: "#182C3D"
   success: "#1C7050"
   warning: "#9B5310"
   danger: "#B23543"
 typography:
   display:
-    fontFamily: "Bahnschrift, 'PingFang SC', 'Microsoft YaHei', sans-serif"
+    fontFamily: "'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
   body:
     fontFamily: "'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
   data:
     fontFamily: "'Cascadia Code', 'SFMono-Regular', Consolas, monospace"
 rounded:
-  control: "8px"
-  panel: "14px"
+  control: "4px"
+  panel: "3px"
 spacing:
   sm: "8px"
   md: "16px"
@@ -55,34 +55,34 @@ components:
 
 ## Overview
 
-产品型中文治理工具，面向用人经理与平台 PMO。视觉承接一页方案的蓝绿与深蓝，不使用企业品牌标识。以可点击的“提供 BG × 消费 BG”矩阵作为唯一突出记忆点；图表服务于验证采用，不用装饰性增长曲线。
+中文 CBB 货架与全生命周期管理原型。用户明确要求参照 pub.dev 的社区式包货架：深蓝顶部、醒目的搜索、白色正文、左侧筛选、文字主导的组件行、标签和版本化文档。面向开发者、维护者和评审方；面试展示通过真实可操作的工作流完成。默认页面是货架，无 KPI 看板、指标口径面板或营销式大数字。
 
-对比过纯展示长图、重型 BI 和静态交互应用，选择静态交互应用：易分享、可解释计算、无服务端依赖。用户已指定 GitHub Pages，页面与模拟数据范围已在前序四块方案中确定，常规布局与技术选择由实现者落实。
+使用现有静态站点与 GitHub Pages。管理视图和使用视图共享领域模型与浏览器本地状态。组件主版本的生命周期轨迹是跨页的一致视觉元素，工作台保留必要的阶段计数，取消原先治理指标的视觉中心地位。
 
 ## Colors
 
-此文档是颜色 token 唯一来源。build.py 从 frontmatter colors 生成 assets/tokens.css；src/styles.css 仅消费语义变量。primary 控制动作及有效采用，warning 指缺口，danger 指逾期，不用颜色单独表达状态。BG 不以品牌颜色编码。
+此文档是基础颜色 token 唯一来源，build.py 生成 assets/tokens.css，shelf.css 与 workspace.css 消费语义变量。蓝色表示链接与主操作，绿色表示可用或完成，橙色表示候选及废弃风险。状态始终有文字。深色主题为 shelf.css 中统一的语义覆盖；不使用外部字体、企业 logo 或品牌配色。
 
 ## Typography
 
-标题使用系统 Bahnschrift 与中文回退，正文系统无衬线，数字使用等宽字体。无需联网加载字体。正文桌面 14px，移动 14px；表格与说明桌面 12px，手机紧凑辅助说明最低 11px；非叙述性编号与品牌小标允许 10px。表头与数字保持清晰层级。
+系统 Segoe UI 与中文回退，正文 14–15px，组件名 22px，详情标题 34px。代码、版本来源与审计日期使用等宽字体。常规标签和辅助文字 11–13px；短平台标签允许 10px。标题采用常规字重，强调信息层次而不是粗体和装饰。
 
 ## Layout
 
-桌面 212px 导航 + 弹性内容；总览为三项指标、采用矩阵与优先治理事项。资产/关系/事项共享工具栏和分页表。1000px 以下导航横向排列；650px 以下指标单列或紧凑排列，矩阵和语义表在自身容器横向滚动，整页不溢出。
+货架：1190px 居中内容，186px 左筛选 + 弹性组件列表。详情：正文 + 218px 元信息栏。管理：200px 左导航 + 工作内容。700px 以下筛选折叠、管理导航横向滚动、详情侧栏移到正文后。表格在自身容器滚动。工作台 CSS 首次进入时按需加载。
 
 ## Elevation & Depth
 
-静态面板使用 1px 分隔与极浅投影，弹窗置于原生 dialog 顶层。不给每个数字制作独立装饰卡。模拟数据标识常驻顶栏。
+主要依赖分隔线和留白，不把每个区域做成卡片。搜索采用圆角输入带；其余控件轻微圆角。原型说明在页尾及指南中可达；普通界面不重复方法论说明。dialog 顶层和 toast 使用有限阴影。
 
 ## Shapes
 
-面板 14px、控件 8px，避免大面积药丸和无意义徽章。数字表使用规整对齐。
+面板 3px、控件 4px。组件平台使用小型方形标签。只有搜索使用明显圆角，以承接 pub.dev 的搜索入口特征。
 
 ## Components
 
-共享的 button、badge、metric、toolbar、table、pagination、dialog、status-message 由 src/app.js 和 src/styles.css 统一拥有。主题 token 通过自动生成的 CSS 直接映射，无第二套主题。
+共享 button、badge、table、pagination、dialog、form-error、toast、code-block、lifecycle-stepper 由 src/shelf.js 和 src/shelf.css 拥有；管理布局由 src/workspace.css 增量负责。所有流程使用同一领域状态与动作。主题偏好仅保存本机。
 
 ## Do's and Don'ts
 
-始终明确虚构范围、统计批次和证据边界；优先展示分子分母和记录入口；所有看似可点击的控件有真实行为；尊重 reduced-motion、键盘与触摸。避免伪实时、假动态指标、伪造外部证据链接和暗示真实公司业绩。
+可操作流程优先于解释性文案；以组件和版本为主线。尊重 reduced-motion、键盘和触摸。公开数据均虚构；不发布内部文档原文、网络地址、联系人或面试实录。不把本地模拟状态当成真实 CI、企业鉴权或生产执行结果。

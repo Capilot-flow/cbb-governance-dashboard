@@ -1,47 +1,48 @@
-# CBB Atlas · 组件治理与采用洞察
+# CBB Atlas
 
-一个以 **资产底账、有效采用、治理闭环** 为主线的静态交互看板。适合展示流程数字化、平台运营、项目治理与指标口径能力。
+一个可操作的 **CBB 组件货架与生命周期管理原型**。以 pub.dev 的包检索和版本文档体验为参考，连接使用方、组件维护者和准入评审流程。
 
-[打开在线演示](https://capilot-flow.github.io/cbb-governance-dashboard/)
+[打开原型](https://capilot-flow.github.io/cbb-governance-dashboard/) · [管理工作台](https://capilot-flow.github.io/cbb-governance-dashboard/?view=workspace&area=assets)
 
-![治理总览，全部数据为合成样例](preview.png)
+![组件货架](preview.png)
 
-**全部组织、角色、项目、证据编号和数值均为合成数据。没有使用任何企业私有信息，不代表任何公司的实际业绩，也不是生产系统。**
+## 可以体验什么
 
-## 能做什么
+- 组件检索、能力分类、技术栈筛选、主版本状态和版本化文档。
+- 创建候选组件、准备材料、提交准入评审、退回整改或批准。
+- 受控试用、正式发布、登记项目接入、查看使用关系。
+- 带版本上下文的问题反馈、处理、修复版本和使用方验证关闭。
+- 废弃安排、替代版本、使用方迁移、窗口校验和退役归档。
+- 跨团队推广试点、双方投入与验收约定、问题与决策进展。
+- 明暗主题、手机和平板布局、JSON 导出与本机演示重置。
 
-- 在提供 BG 范围内查看信息完整率、去重后的跨 BG 组件 / 项目采用、原定到期行动闭环率。
-- 点击采用矩阵，进入具体供需关系；查看资产版本、Owner、证据及治理事项详情。
-- 搜索、状态筛选、排序与分页；筛选状态保留在 URL，可前进后退。
-- 导出当前筛选全量 CSV 或完整模拟 JSON，按同一口径复算。
-- 无运行时框架、CDN、服务器或登录依赖；支持桌面、平板、手机，包含键盘与 reduced-motion 支持。
+## 推荐演示路线
 
-## 数据与口径
+1. 在货架搜索 Path Kernel，查看边界、平台和接入指导。
+2. 进入管理工作台的准入评审，核验 2.0.0 申请并留下结论。
+3. 在版本发布中确认发布，返回货架选择新版本。
+4. 登记使用项目，反馈一个问题，在工作台完成处理和验证。
+5. 为 Trace Log 1.x 指定 2.1.0 为替代版本，安排迁移并登记使用方结果。
+6. 在页底调整演示日期至窗口结束，再完成退役检查。
+7. 也可从新建组件开始完整体验，或在页顶“体验流程”查看提示。
 
-数据固定快照为 **2026-11-20 日终（北京时间）**。6 个虚拟 BG、42 个登记组件、84 个版本、147 条采用记录和 60 个治理事项，由固定规则与种子标记生成。以 `data/mock.json` 实际记录数为准。
+## 数据与运行方式
 
-`scripts/generate_mock.py` 是唯一模拟数据生成源，`src/metrics.js` 是统计逻辑唯一来源。详细定义见 [PRODUCT.md](PRODUCT.md)，站内“口径说明”也可直接打开。
+这是产品交互原型，所有组件、团队、接口及证据均为虚构示例。操作保存在当前浏览器，刷新可保留，页底可导出或重置；不会跨设备同步。构建、企业鉴权、制品分发、真实技术验证和消息通知需要后端服务接入。
 
-月份筛选仅改变行动统计批次；资产和采用始终是固定快照。归档单列，试用不冒充发布采用；关闭状态没有证据不计闭环；改期与撤销保留在原定批次；零分母显示“—”。这些约定可通过测试核验。
+零运行时网络依赖，静态托管即可运行。
 
-## 本地运行与构建
-
-```text
+```sh
 python -X utf8 build.py
-node --test tests/metrics.test.cjs
-python -m http.server 8080
+node --test tests/lifecycle.test.cjs tests/storage.test.cjs
+node scripts/test-journeys.cjs
 ```
 
-打开 `http://localhost:8080`。`index.html` 与 `assets/` 都是生成产物；修改 `src/`、`DESIGN.md` 或生成器后重新构建，不直接编辑 HTML。
+浏览器验证需要本机 Chrome 和 Playwright。HTML 是生成产物，修改源文件 src/shelf.template 后重建。代码结构、流程边界和交互约定见 PRODUCT.md、DESIGN.md 与 UX-CONTRACT.md。
 
-可选浏览器测试：Node 20+，`npm install`，安装本机 Chrome 后运行 `npm run test:browser`。静态站点本身不依赖这些开发包。
+## 设计参考
 
-## GitHub Pages
+- [pub.dev 包检索](https://pub.dev/help/search)
+- [pub.dev 组件详情](https://pub.dev/packages/http)
 
-发布仓库默认分支根目录，包含 `.nojekyll`。在 Settings → Pages 选择 Deploy from a branch → main → /(root)。[GitHub Pages 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
-
-## 方法参考
-
-[GitHub 官方依赖图说明](https://docs.github.com/en/code-security/concepts/supply-chain-security/dependency-graph)帮助理解依赖、版本和引用结构。依赖声明不是发布采用证明；本演示另外加入消费方确认、采用阶段与模拟证据。
-
-外部文档是方法参考，**不提供本演示的数值，也不意味着存在公开的 CBB 指标基准**。
+本项目不是任何公司的内部系统或生产运行案例。

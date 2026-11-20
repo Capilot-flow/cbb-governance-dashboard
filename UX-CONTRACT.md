@@ -1,30 +1,37 @@
-# 交互与行为约定
+# CBB Atlas 交互约定
 
-业务来源：PRODUCT.md。视觉来源：DESIGN.md。所有内容 zh-CN，日期按固定快照及日期字符串处理，不发生时区偏移。
+业务以 PRODUCT.md 为准，视觉以 DESIGN.md 为准。中文界面；模拟日期由 state.today 表达，不随设备时区偏移。
 
 ## Canonical UI Map
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
-| Select/Listbox | 原生 select | 本文 | BG、月份、局部状态；接受操作系统弹层 | 浏览器键盘与窄屏 |
-| Scrollbar | src/styles.css 全局基线 | DESIGN.md | 表容器仅决定横向滚动 | computed style |
-| Toast | 共享 #status-message live region | 本文 | 下载提示 | 浏览器导出 |
-| Date | 固定快照与原生月份选项 | PRODUCT.md | 不提供自由日期输入 | 单元测试 |
+| Select/Listbox | 原生 select / selectField | 本文 | 版本、筛选、替代版本，操作系统弹层可接受 | 浏览器流程 |
+| Scrollbar | src/shelf.css 全局基线 | DESIGN.md | 文档自然纵向滚动，表格与代码自身横向滚动 | 390/768/1440 视口 |
+| Toast | 单一 #status-message | 本文 | 保存、复制和导出结果 | role=status |
+| Date | 原生 date / state.today | PRODUCT.md | 演示日期与迁移窗口，原生弹层可接受 | 生命周期日期校验 |
+| Dialog | 原生 #modal 与 #confirm-dialog | 本文 | 表单与放弃/重置确认 | Escape、焦点与未保存提示 |
 
-## 状态与导航
+## 路由与查询
 
-- 四个导航视图使用真实链接，客户端渐进增强。view、bg、consumer、q、status、page、sort 写入 URL；切换筛选重置页码；浏览器前进后退恢复状态。
-- 搜索只在本地运行，IME 组合输入期间不提交；完成后筛选。非空时显示有可访问名称的清除按钮，清除后恢复输入焦点。
-- 共享语义 table；每页 10 条，显式上一页/下一页及数量；排序按钮更新 aria-sort。表格有独立横向滚动容器，文档负责纵向滚动。
-- BG 为供给范围；消费 BG 是采用视图局部筛选。概览矩阵单元点击进入相应供需对的采用明细。
-- 资产详情和口径说明使用原生 dialog，具有标题、关闭按钮、Escape、焦点隔离和关闭后焦点恢复。长内容在弹窗内滚动；不使用 alert/confirm/prompt。
-- 导出 CSV 为当前视图筛选全量而不是当前页，文件含 BOM、模拟数据标识与稳定 ID；JSON 是完整合成数据。只读操作，不写后台或存储个人数据。
-- 当前筛选无记录时展示明确空态与重置动作，不伪造数据。零分母显示“—”。无 JavaScript 提供说明；脚本失败时提供刷新引导。固定数据无异步请求、远程搜索、登录或服务器写入。
+view=catalog/component/workspace/guide；组件 id、version、tab 与管理 area 写入 URL。筛选 category/language/status、搜索 q、排序 sort、分页 page 保留在 URL。换筛选重置页码。浏览器前进后退能恢复已提交查询。
 
-## 一致性与反馈
+搜索显式提交，避免输入中文时提前过滤。窄屏筛选折叠；文档标签和管理导航在自身区域滚动。详情使用独立页面，选择版本后所有文档与操作使用该版本上下文。
 
-所有导航、工具栏、按钮、状态标签、分页、空态共享实现。导出成功在固定 live region 提示，不改变按钮尺寸。无实质 CRUD、破坏性操作、认证与权限变更，相关能力不适用。
+## 表单和动作
 
-## Business-source traceability
+使用语义化表单、label、button；novalidate 禁用原生校验气泡。应用验证失败时保留输入，表单顶部显示并聚焦可读错误。正常保存后回到所属列表或更新当前详情。主版本状态由 src/model.js 唯一维护。
 
-PRODUCT.md 的统计边界由 src/metrics.js 唯一实现，所有视图读取该结果；data/mock.json 仅为合成数值源。模拟状态与错误边界以 tests/metrics.test.cjs 和 scripts/test-browser.cjs 核验。
+弹窗使用 showModal / close，Escape 走取消逻辑；有未保存输入时由应用确认是否放弃。重置使用独立确认框，默认取消。不会删除文件、发送消息或修改外部企业系统。
+
+## 本地持久化
+
+src/store.js 统一比较 revision 与 generation 后写入 localStorage。写入失败保留输入，不宣布成功。重置写入新 generation，防止旧标签页覆盖。导出仅含当前原型记录。浏览器记录不在设备间同步。
+
+## 失败与空态
+
+没有搜索结果时可清除筛选或提交能力需求。找不到组件时提供返回货架入口。未发布版本、废弃和退役状态有对应操作限制。缺证据不能提交，缺核验或结论不能通过评审；仍有使用关系或窗口未结束时不能退役。
+
+## 集成边界
+
+示例包配置、API 和证据均标明原型属性。来源记录展示本地示例，不伪造可访问的内部系统链接。构建、制品仓库、身份权限和外部通知留作实际集成。

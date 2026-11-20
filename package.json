@@ -1,12 +1,12 @@
 {
   "name": "cbb-governance-dashboard",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "CBB governance dashboard with reproducible synthetic records",
+  "description": "CBB catalogue and full lifecycle management interactive prototype",
   "scripts": {
     "build": "python -X utf8 build.py",
-    "test": "node --test tests/metrics.test.cjs",
-    "test:browser": "node scripts/test-browser.cjs"
+    "test": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs",
+    "test:browser": "node scripts/test-journeys.cjs"
   },
   "devDependencies": {"playwright": "1.62.1"},
   "engines": {"node": ">=20"}

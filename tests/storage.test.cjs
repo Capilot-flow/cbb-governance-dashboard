@@ -1,0 +1,5 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const S=require('../src/store.js');
+const memory=()=>{const m=new Map();return{getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)};};
+test('dirty tab cannot resurrect pre-reset state',()=>{const store=memory(),old={revision:0,generation:'initial'};S.commit(store,'demo',old,{revision:1,generation:'initial'});S.reset(store,'demo',{revision:0,generation:'reset-unique'});assert.throws(()=>S.commit(store,'demo',old,{revision:1,generation:'initial'}),/更新/);assert.equal(JSON.parse(store.getItem('demo')).generation,'reset-unique');});
+test('cleared storage is a conflict for an existing saved state',()=>{const store=memory();assert.throws(()=>S.commit(store,'demo',{revision:2,generation:'initial'},{revision:3,generation:'initial'}),/更新/);});
+test('initial write and current-revision write succeed',()=>{const store=memory();S.commit(store,'demo',{revision:0},{revision:1});S.commit(store,'demo',{revision:1},{revision:2});assert.equal(JSON.parse(store.getItem('demo')).revision,2);});
