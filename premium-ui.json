@@ -1,0 +1,11 @@
+{
+  "profile": "product-admin",
+  "sourceRoots": ["src"],
+  "locale": "zh-CN",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": ["Select/Listbox", "Scrollbar", "Toast", "Date"],
+  "ownership": {"Select/Listbox": "native", "Date": "native"},
+  "requiredCommands": ["unit", "browser"],
+  "commands": {"unit": "node --test tests/metrics.test.cjs", "browser": "node scripts/test-browser.cjs"},
+  "evidence": {"metrics": "tests/metrics.test.cjs", "failurePaths": "scripts/test-browser.cjs"}
+}

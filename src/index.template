@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="__COLOR_NAV__">
+  <meta name="description" content="CBB 资产、跨团队采用与治理事项的交互演示。全部数据为合成样本，指标可追溯到原始记录。">
+  <meta property="og:title" content="CBB Atlas · 组件治理与采用洞察">
+  <meta property="og:description" content="资产底账、跨 BG 采用与治理闭环。全部使用可复现的合成数据，指标可追溯。">
+  <meta property="og:image" content="https://capilot-flow.github.io/cbb-governance-dashboard/preview.png">
+  <title>CBB Atlas · 治理总览</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='__FAVICON_COLOR__'/%3E%3Cpath d='M10 11h8v8h-8zm12 0h8v8h-8zM10 23h8v8h-8zm12 0h8v8h-8z' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./assets/tokens.css">
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <aside class="sidebar" aria-label="主要导航">
+    <a class="brand" href="?view=overview" aria-label="CBB Atlas 治理总览"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>CBB <b>Atlas</b><small>组件治理与采用洞察</small></span></a>
+    <p class="nav-label">治理工作区</p>
+    <nav id="navigation">
+      <a href="?view=overview" data-view="overview"><span aria-hidden="true">◫</span>治理总览</a>
+      <a href="?view=assets" data-view="assets"><span aria-hidden="true">▦</span>资产底账</a>
+      <a href="?view=adoption" data-view="adoption"><span aria-hidden="true">⇄</span>采用关系</a>
+      <a href="?view=actions" data-view="actions"><span aria-hidden="true">☷</span>治理事项</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span>静态演示环境<p>虚拟组织 · 合成数据<br>指标从原始记录计算</p><button type="button" class="nav-help" data-dialog="method">查看数据与口径 ↗</button></div>
+  </aside>
+  <div class="workspace">
+    <div class="demo-banner"><span class="demo-tag">DEMO</span><span>全部为合成数据，不代表任何企业真实情况</span><button type="button" data-dialog="method">数据说明</button></div>
+    <header class="topbar"><div><span class="eyebrow">软件平台化 / 治理工作区</span><p id="scope-label">供给侧范围：全部 BG</p></div><div class="topbar-actions"><span class="snapshot"><span class="status-dot"></span>固定快照 <strong>2026.11.20</strong></span><button class="button secondary" type="button" data-dialog="method">口径说明</button><button class="button primary" type="button" id="export-json">导出模拟数据 <span aria-hidden="true">↓</span></button></div></header>
+    <main id="main" tabindex="-1">
+      <div class="page-heading"><div><span class="section-kicker">CBB GOVERNANCE</span><h1 id="page-title">治理总览</h1><p id="page-description">看清资产、验证采用，让治理行动有据可查。</p></div><div class="global-filters"><label>资产提供方<select id="bg-filter" aria-label="资产提供 BG 范围"><option value="all">全部 BG</option></select></label><label>行动统计月份<select id="month-filter" aria-label="治理行动统计月份"><option value="2026-11">2026年11月 · 截至20日</option><option value="2026-10">2026年10月</option></select></label></div></div>
+      <section id="metrics" class="metrics" aria-label="核心治理指标"></section>
+      <div id="view-content"><div class="loading-state" role="status"><span class="spinner"></span>正在读取演示样本…</div></div>
+      <noscript><p class="empty-state">此演示需要 JavaScript 计算指标。请启用 JavaScript 后刷新页面。</p></noscript>
+      <footer class="page-footer"><span>张若兰 · 个人作品</span><span>组件 / 版本 / 消费项目分层计数 · 快照按北京时间日终口径</span><button type="button" data-dialog="method">查看定义与方法参考</button></footer>
+    </main>
+  </div>
+  <div id="status-message" class="status-message" role="status" aria-live="polite"></div>
+  <dialog id="detail-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><div><span class="section-kicker">CBB ATLAS / DETAIL</span><h2 id="dialog-title">详细信息</h2></div><button type="button" id="close-dialog" class="close-button" aria-label="关闭详细信息" autofocus>×</button></div><div id="dialog-body"></div></dialog>
+  <script src="./assets/mock-data.js"></script>
+  <script src="./assets/metrics.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>

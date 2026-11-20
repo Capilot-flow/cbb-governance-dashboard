@@ -1,0 +1,17 @@
+/* Generated from DESIGN.md. Do not edit. */
+:root{
+  --color-primary:#0B6A73;
+  --color-primary-soft:#E5F1F2;
+  --color-bg:#F3F6F9;
+  --color-surface:#FFFFFF;
+  --color-text:#193344;
+  --color-muted:#5D7180;
+  --color-line:#DCE4EB;
+  --color-nav:#143747;
+  --color-success:#1C7050;
+  --color-warning:#9B5310;
+  --color-danger:#B23543;
+  --font-display:Bahnschrift, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body:'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-data:'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
+}
