@@ -1,48 +1,39 @@
 # CBB Atlas
 
-一个可操作的 **CBB 组件货架与生命周期管理原型**。以 pub.dev 的包检索和版本文档体验为参考，连接使用方、组件维护者和准入评审流程。
+一个可操作的 CBB 组件货架与治理原型，以 pub.dev 的检索、包列表和版本文档体验为参考，连接资产发现、接入与持续维护。
 
-[打开原型](https://capilot-flow.github.io/cbb-governance-dashboard/) · [管理工作台](https://capilot-flow.github.io/cbb-governance-dashboard/?view=workspace&area=assets)
+[打开货架](https://capilot-flow.github.io/cbb-governance-dashboard/?v=4) · [维护复审](https://capilot-flow.github.io/cbb-governance-dashboard/?view=workspace&area=health) · [版本依赖图](https://capilot-flow.github.io/cbb-governance-dashboard/?view=component&id=path-kernel&version=1.8.2&tab=deps)
 
 ![组件货架](preview.png)
 
-## 可以体验什么
+## 推荐体验
 
-- 组件检索、能力分类、技术栈筛选、主版本状态和版本化文档。
-- 创建候选组件、准备材料、提交准入评审、退回整改或批准。
-- 受控试用、正式发布、登记项目接入、查看使用关系。
-- 带版本上下文的问题反馈、处理、修复版本和使用方验证关闭。
-- 废弃安排、替代版本、使用方迁移、窗口校验和退役归档。
-- 跨团队推广试点、双方投入与验收约定、问题与决策进展。
-- 明暗主题、手机和平板布局、JSON 导出与本机演示重置。
+1. 在货架按业务场景找 Path Kernel，看跨团队使用证据、全部版本及当前版本项目数；收藏或查看相近能力。
+2. 在「依赖关系」缩放、拖动、点击节点，切换「谁会受影响」，查看具体版本和潜在项目。
+3. 找到 Frame View 的维护与复用信号，发起复审，指定负责人和期限，记录试点，登记使用后验证效果。尚未解决的支持问题继续保留。
+4. 准入评审时把顶部演示身份切到陈岚，逐项核验 2.0.0；切回林沐发布。也可从项目重复实现出发新建候选组件，走完整准入至退役流程。
+5. 在草稿版本管理依赖，试试循环依赖和已发布快照限制；通过问题入口提出接口需求或附已有 PR 链接。
+6. 使用「规模演示」载入 320 个合成组件，检验动态筛选与分页；页底可重置。
 
-## 推荐演示路线
+支持维护确认、响应事实、问题严重级别与影响、具名审计、试点承诺、维护估算、收敛评估及迁移退役。零直接登记不等于无人使用；老版本也可能仍被持续维护。策略和产品边界见 PRODUCT.md。
 
-1. 在货架搜索 Path Kernel，查看边界、平台和接入指导。
-2. 进入管理工作台的准入评审，核验 2.0.0 申请并留下结论。
-3. 在版本发布中确认发布，返回货架选择新版本。
-4. 登记使用项目，反馈一个问题，在工作台完成处理和验证。
-5. 为 Trace Log 1.x 指定 2.1.0 为替代版本，安排迁移并登记使用方结果。
-6. 在页底调整演示日期至窗口结束，再完成退役检查。
-7. 也可从新建组件开始完整体验，或在页顶“体验流程”查看提示。
-
-## 数据与运行方式
-
-这是产品交互原型，所有组件、团队、接口及证据均为虚构示例。操作保存在当前浏览器，刷新可保留，页底可导出或重置；不会跨设备同步。构建、企业鉴权、制品分发、真实技术验证和消息通知需要后端服务接入。
-
-零运行时网络依赖，静态托管即可运行。
+## 本地构建与验证
 
 ```sh
 python -X utf8 build.py
-node --test tests/lifecycle.test.cjs tests/storage.test.cjs
+node --test tests/lifecycle.test.cjs tests/storage.test.cjs tests/feedback.test.cjs
 node scripts/test-journeys.cjs
+node scripts/test-feedback-browser.cjs
 ```
 
-浏览器验证需要本机 Chrome 和 Playwright。HTML 是生成产物，修改源文件 src/shelf.template 后重建。代码结构、流程边界和交互约定见 PRODUCT.md、DESIGN.md 与 UX-CONTRACT.md。
+浏览器验证需要 Chrome 与 Playwright。HTML 是产物，修改 src 源文件再构建。交互和视觉约定见 UX-CONTRACT.md、DESIGN.md。G6 随仓库提供，首次打开依赖页时本地加载；无 CDN 运行依赖。
 
-## 设计参考
+所有数据、人员、项目与证据虚构，操作仅保存在当前浏览器，不跨设备同步。真实鉴权、构建、制品和消息仍需服务集成。新版保留已有演示记录；想看新版初始样例可先导出再重置。
 
-- [pub.dev 包检索](https://pub.dev/help/search)
+## 参考
+
+- [pub.dev 检索](https://pub.dev/help/search)
 - [pub.dev 组件详情](https://pub.dev/packages/http)
+- [AntV G6 紧凑树](https://g6.antv.antgroup.com/zh/examples/layout/compact-box/basic/)
 
-本项目不是任何公司的内部系统或生产运行案例。
+本项目用于产品方案验证，不是任何公司的生产案例。

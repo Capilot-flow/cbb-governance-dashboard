@@ -1,11 +1,32 @@
 {
   "profile": "product-admin",
-  "sourceRoots": ["src"],
+  "sourceRoots": [
+    "src"
+  ],
   "locale": "zh-CN",
   "canonicalMap": "UX-CONTRACT.md",
-  "requiredCapabilities": ["Select/Listbox", "Scrollbar", "Toast", "Date"],
-  "ownership": {"Select/Listbox": "native", "Date": "native"},
-  "requiredCommands": ["unit", "browser"],
-  "commands": {"unit": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs", "browser": "node scripts/test-journeys.cjs"},
-  "evidence": {"domain": "tests/lifecycle.test.cjs", "failurePaths": "scripts/test-journeys.cjs", "storage": "tests/storage.test.cjs"}
+  "requiredCapabilities": [
+    "Select/Listbox",
+    "Scrollbar",
+    "Toast",
+    "Date"
+  ],
+  "ownership": {
+    "Select/Listbox": "native",
+    "Date": "native"
+  },
+  "requiredCommands": [
+    "unit",
+    "browser"
+  ],
+  "commands": {
+    "unit": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs tests/feedback.test.cjs",
+    "browser": "node scripts/test-journeys.cjs && node scripts/test-feedback-browser.cjs"
+  },
+  "evidence": {
+    "domain": "tests/lifecycle.test.cjs",
+    "failurePaths": "scripts/test-journeys.cjs",
+    "storage": "tests/storage.test.cjs",
+    "governance": "tests/feedback.test.cjs"
+  }
 }

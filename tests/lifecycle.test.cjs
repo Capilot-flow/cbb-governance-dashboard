@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const M=require('../src/model.js');
 const seed=require('../data/mock.json');
 const fresh=()=>JSON.parse(JSON.stringify(seed));
-const act=(s,type,payload={})=>M.command(s,{type,...payload});
+const act=(s,type,payload={})=>M.command(s,{type,actorId:type==='review'?'chen':type==='issueTransition'&&(payload.next==='Closed'||(payload.next==='InProgress'&&s.issues.find(i=>i.id===payload.issueId)?.status==='Verify'))?'xu':'lin',...payload});
 test('published catalogue excludes drafts and archived lines by default',()=>{
  const s=fresh();assert(M.visibleComponents(s).every(c=>M.recommended(c)));assert(!M.visibleComponents(s).find(c=>c.id==='signal-bus'));
 });

@@ -34,15 +34,33 @@ items=[
  ('timer-base','Timer Base','旧任务定时器','平台基础','C++','基础平台组','历史单线程调度能力，仅保留版本与迁移记录。',
   ['历史单线程定时调度'],['已停止支持；禁止新增依赖'],[('1.0.0','Retired','Released',True)])
 ]
+REQUIRES={
+ 'path-kernel':[dict(component='config-kit',range='^1.4.0'),dict(component='trace-log',range='^2.1.0')],
+ 'device-link':[dict(component='trace-log',range='^2.1.0'),dict(component='config-kit',range='^1.2.0')],
+ 'trace-log':[],
+ 'config-kit':[dict(component='trace-log',range='^1.3.0')],
+ 'frame-view':[dict(component='device-link',range='^0.9.0'),dict(component='config-kit',range='^1.4.0')],
+ 'signal-bus':[dict(component='trace-log',range='^2.1.0')],
+ 'legacy-codec':[dict(component='config-kit',range='^1.0.0')],
+ 'timer-base':[]
+}
+DATES={'path-kernel':{'1.8.2':'2026-04-15'},'device-link':{'0.9.0':'2026-10-28'},
+ 'trace-log':{'2.1.0':'2026-11-12','1.3.0':'2025-11-20'},'config-kit':{'1.4.0':'2026-09-18'},
+ 'frame-view':{'1.2.1':'2026-11-12'},'signal-bus':{'0.1.0':'2026-11-12'},
+ 'legacy-codec':{'1.0.0':'2025-06-10'},'timer-base':{'1.0.0':'2024-09-01'}}
+
 components=[]
 for i,(slug,name,subtitle,category,language,owner,summary,scope,exclusions,versions) in enumerate(items):
     c=dict(id=slug,name=name,subtitle=subtitle,category=category,language=language,owner=owner,
         maintainer=owner+'维护小组',summary=summary,scope=scope,exclusions=exclusions,
         input='结构化参数及调用上下文',output='结果对象与明确的错误码',
-        repository='demo://source/'+slug,dependencies=['标准运行库'] if i else ['Config Kit 1.4.0'],
+        repository='demo://source/'+slug,
+        dependencies=['C++17 标准运行库'] if language=='C++' else ['浏览器 ES2022 运行时'],
+        requires=REQUIRES.get(slug,[]),
         versions=[],lines={},tags=[category,language],created='2026-08-12')
     for number,status,phase,released in versions:
         v=version(number,status,phase,released,missing=slug=='signal-bus')
+        if number in DATES.get(slug,{}):v['date']=DATES[slug][number]
         if status=='Trial':v.update(released=False,phase='Approved',trialReady=True)
         if language=='TypeScript':v.update(platforms=['Web','WebView'],compiler='TypeScript 5',runtime='ES2022')
         c['versions'].append(v);c['lines'][number.split('.')[0]]=dict(status=status)
@@ -60,5 +78,47 @@ data=dict(schema=2,revision=0,today='2026-11-20',meta=dict(isMock=True,descripti
          dict(id='ISS-002',component='device-link',version='0.9.0',title='补充断线重连的使用示例',kind='文档',environment='Linux x64',detail='希望增加事件订阅与重连顺序示例。',status='InProgress',owner='设备平台组',date='2026-11-19',history=[])],
  events=[dict(id='EVT-001',date='2026-11-18',actor='基础算法组',component='path-kernel',version='2.0.0',text='提交 2.0.0 上架评审，原 1.x 发布线保持可用。'),dict(id='EVT-002',date='2026-11-19',actor='使用方',component='device-link',version='0.9.0',text='登记设备调试器受控试点。')])
 data['rollouts']=[dict(id='PILOT-1',name='路径运算跨团队试点',supplier='基础算法组',consumer='应用二组',commitment='供给方提供 2.0 候选制品和维护支持；使用方安排两人完成兼容及异常路径验证。',status='进行中',blocker='使用方需确认异常输入的处理约定，由双方接口负责人周内评审。'),dict(id='PILOT-2',name='设备连接接入验证',supplier='设备平台组',consumer='设备应用组',commitment='供给方提供重连示例；使用方完成 Linux 环境受控接入并提交验证记录。',status='等待资源决策',blocker='验证机排期冲突，提交双方负责人确认本周投入及替代时间。')]
+# Fictional evidence for adoption/maintenance, explicitly separated from release dates.
+scenario_map={
+ 'path-kernel':(['轮廓编辑','批量路径计算'],['桌面编辑器','离线计算工具'],['lunkuo','lun kuo','jihe']),
+ 'device-link':(['设备调试','连接诊断'],['设备调试工具'],['shebei','lianjie']),
+ 'trace-log':(['故障定位','设备诊断'],['桌面编辑器','设备调试工具'],['rizhi','ri zhi','guzhang']),
+ 'config-kit':(['工程配置加载','数据校验'],['桌面编辑器','设备调试工具'],['peizhi','pei zhi']),
+ 'frame-view':(['图像检测回放','视觉结果标注'],['视觉检测工具'],['tuxiang','shi jue','yulan']),
+ 'signal-bus':(['插件事件分发'],['桌面编辑器'],['shijian','cha jian']),
+ 'legacy-codec':(['历史工程迁移'],['工程迁移工具'],['qianyi']),
+ 'timer-base':(['历史调度兼容'],['旧版应用'],['dingshi'])}
+dependencies={'path-kernel':[('config-kit','1.4.0'),('trace-log','2.1.0')], 'config-kit':[('trace-log','2.1.0')],
+ 'device-link':[('config-kit','1.4.0'),('trace-log','2.1.0')],
+ 'frame-view':[('config-kit','1.4.0')], 'signal-bus':[('trace-log','2.1.0')]}
+for c in components:
+    scenarios,lines,aliases=scenario_map[c['id']]
+    c.update(scenarios=scenarios,productLines=lines,aliases=aliases,lastMaintainedAt='2026-11-18',maintenanceConfirmedAt='2026-11-18',usageCoverage='confirmed',economics=dict(maintenanceHours=None,avoidedHours=None,basis=''))
+    if c['id']=='frame-view':
+        c.update(lastMaintainedAt='2026-07-10',maintenanceConfirmedAt='2026-07-10',created='2026-06-01')
+        c['versions'][0]['date']='2026-08-10'
+        c['economics']=dict(maintenanceHours=8,avoidedHours=0,basis='模拟月度估算：维护例行事项与当前已登记使用记录。',date='2026-11-18')
+    if c['id']=='config-kit':c['economics']=dict(maintenanceHours=6,avoidedHours=24,basis='模拟试点估算，按下游项目重复配置工作量估计；不是实测绩效。',date='2026-11-18')
+    for v in c['versions']:
+        v['dependencies']=[dict(component=i,version=n,kind='runtime') for i,n in dependencies.get(c['id'],[])]
+        v['compatibility']=dict(declaration='breaking' if v['number'].startswith('2.') else 'compatible',notes='当前主版本内声明向后兼容；变更仍需按使用环境回归验证。')
+    c['requires']=[dict(component=i,range=n) for i,n in dependencies.get(c['id'],[])]
+path_component=next(c for c in components if c['id']=='path-kernel')
+old=version('1.7.0');old.update(date='2026-09-12',dependencies=[dict(component='config-kit',version='1.4.0',kind='runtime')],compatibility=dict(declaration='compatible',notes='1.x 内向后兼容声明'))
+path_component['versions'].append(old)
+data['uses'][1]['version']='1.7.0'
+data['issues'][0]['severity']='S2'
+data['issues'][1].update(respondedAt='2026-11-20',history=[dict(fromStatus='Open',to='InProgress',date='2026-11-20',note='已确认文档补充范围')],severity='S3')
+data['issues'].extend([
+ dict(id='ISS-003',component='path-kernel',version='1.7.0',title='补充批处理输入说明',kind='文档',environment='Windows x64',detail='示例文档已修订并由使用方验证。',status='Closed',owner='基础算法组',date='2026-11-01',respondedAt='2026-11-02',severity='S3',history=[dict(to='InProgress',date='2026-11-02'),dict(to='Closed',date='2026-11-06')]),
+ dict(id='ISS-004',component='frame-view',version='1.2.1',title='大图回放存在内存增长',kind='缺陷',environment='WebView',detail='连续回放大尺寸图像时内存持续增长，需要确认资源释放。',status='Open',owner='交互平台组',date='2026-11-05',severity='S1',history=[]),
+ dict(id='ISS-005',component='path-kernel',version='1.8.2',title='极小轮廓偏移的边界精度',kind='缺陷',environment='Linux x64',detail='极小轮廓需要验证精度边界；潜在使用方由登记关系计算。',status='InProgress',owner='基础算法组',date='2026-11-10',respondedAt='2026-11-12',severity='S1',history=[dict(to='InProgress',date='2026-11-12',note='已受理并确认测试样本')]),
+ dict(id='ISS-006',component='config-kit',version='1.4.0',title='希望增加配置变更订阅接口',kind='接口需求',environment='桌面应用',detail='使用方希望避免轮询配置快照，需评估线程和回调生命周期。',status='Open',owner='基础平台组',date='2026-11-08',severity='S2',history=[])])
+data['actors']=[dict(id='lin',name='林沐',role='maintainer',label='维护负责人'),dict(id='chen',name='陈岚',role='reviewer',label='准入评审人'),dict(id='zhou',name='周然',role='operator',label='平台运营'),dict(id='xu',name='许言',role='consumer',label='使用方代表')]
+data['actorId']='lin';data['governanceCases']=[];data['favorites']={}
+for i,e in enumerate(data['events']):e.update(actorId='lin' if i%2==0 else 'xu',actor='林沐' if i%2==0 else '许言',actorRole='维护负责人' if i%2==0 else '使用方代表')
+for idx,c in enumerate(components):
+    data['events'].append(dict(id='EVT-'+str(len(data['events'])+1).zfill(3),date='2026-08-12',actor='林沐',actorId='lin',actorRole='维护负责人',component=c['id'],version=c['versions'][0]['number'],text='明确能力范围、维护团队与版本化交付入口。'))
+    data['events'].append(dict(id='EVT-'+str(len(data['events'])+1).zfill(3),date=c['maintenanceConfirmedAt'],actor='林沐',actorId='lin',actorRole='维护负责人',component=c['id'],version=c['versions'][0]['number'],text='确认维护责任，记录当前使用限制与已知问题。'))
 (ROOT/'data'/'mock.json').write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
 print(f'Generated {len(components)} fictional components and versioned lifecycle records.')

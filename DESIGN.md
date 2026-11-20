@@ -81,8 +81,13 @@ components:
 
 ## Components
 
-共享 button、badge、table、pagination、dialog、form-error、toast、code-block、lifecycle-stepper 由 src/shelf.js 和 src/shelf.css 拥有；管理布局由 src/workspace.css 增量负责。所有流程使用同一领域状态与动作。主题偏好仅保存本机。
+共享 button、badge、table、pagination、dialog、form-error、toast、code-block、lifecycle-stepper 由 src/shelf.js 和 src/shelf.css 拥有；管理布局由 src/workspace.css 增量负责。依赖图容器与健康度标签由 shelf.css 末尾的附加段落负责，节点填充为 surface、描边按状态取 primary / warning / muted / line，除搜索外不使用大圆角。健康度标签必须带文字（健康、观察、待复审、迁移中、未上架、已退役），不只用颜色区分。所有流程使用同一领域状态与动作。主题偏好仅保存本机。
 
 ## Do's and Don'ts
 
 可操作流程优先于解释性文案；以组件和版本为主线。尊重 reduced-motion、键盘和触摸。公开数据均虚构；不发布内部文档原文、网络地址、联系人或面试实录。不把本地模拟状态当成真实 CI、企业鉴权或生产执行结果。
+
+
+## Adoption and maintenance revision
+
+货架默认复用排序；项目与团队名称提供使用证据。健康信号为事实与动作入口，不做综合打分或大数字面板。使用量以小字和清晰范围呈现；状态、Owner、最近维护先于次要标签。筛选统一大热区 radio，并按 dimensions 折叠。详情补业务场景、使用与维护、具名变更记录。治理工作台用列表承接信号、负责人、期限和验证结果。G6 节点按版本分行，虚线表示共享引用；颜色在挂载时读取 CSS 语义 token，切主题重建，不维护另一套硬编码色板。

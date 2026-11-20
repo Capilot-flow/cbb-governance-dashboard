@@ -11,6 +11,8 @@
 | Toast | 单一 #status-message | 本文 | 保存、复制和导出结果 | role=status |
 | Date | 原生 date / state.today | PRODUCT.md | 演示日期与迁移窗口，原生弹层可接受 | 生命周期日期校验 |
 | Dialog | 原生 #modal 与 #confirm-dialog | 本文 | 表单与放弃/重置确认 | Escape、焦点与未保存提示 |
+| Segmented | `.segmented` 链接组 | 本文 | 依赖图的上游/下游切换，必须写入 URL | 前进后退可恢复方向 |
+| Dependency graph | `#dep-graph` 由 src/deps.js 独占 | PRODUCT.md | 紧凑树布局；窄屏只展开一层 | 节点文字不裁切、点击节点可跳转、G6 缺失时回退文字清单 |
 
 ## 路由与查询
 
@@ -35,3 +37,14 @@ src/store.js 统一比较 revision 与 generation 后写入 localStorage。写�
 ## 集成边界
 
 示例包配置、API 和证据均标明原型属性。来源记录展示本地示例，不伪造可访问的内部系统链接。构建、制品仓库、身份权限和外部通知留作实际集成。
+
+
+## 复用与维护扩展
+
+src/governance.js 是使用、响应、维护信号、版本依赖和复审命令的唯一共享 owner；src/feedback-ui.js 复用 shelf.js 的表单、表格、弹窗、持久化和错误组件。统一 command 入口不绕过存储防冲突。
+
+筛选统一使用大热区 radio 和 details 折叠；排序和页大小为原生 select。scenario/productLine/team/discover/pageSize 也入 URL。收藏按演示身份区分。货架和详情同时显示全部版本与当前版本使用数。图表按钮调用 CBB_DEPS.control，主题切换重建画布，延迟加载已离开的画布不得重新挂载。
+
+维护信号必须能打开带负责人及期限的复审；试点关联原记录，关闭要检查使用证据。保留必须有理由及下次复审日期。贡献方案只接受 HTTPS。依赖只能改草稿，修改后制品及测试须重验。演示身份切换明确区别真实登录；命令层校验权限，错误保留输入。新增流程验证由 scripts/test-feedback-browser.cjs 承接。
+
+复审按去重项目身份验证新增复用，不以新增 USE 行冒充成果。重复保存试点更新同一活跃记录；转向保留、核实或收敛会中止原试点并记录原因。关闭问题或验证失败需使用方代表，受理及交验证需维护负责人，审计展示所选身份的真实角色。所有仍可接入的已发布版本以及有活跃项目的已废弃版本都能阻塞其依赖退役。领域图遍历不受图形展示层数限制。
