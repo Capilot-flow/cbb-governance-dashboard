@@ -1,13 +1,14 @@
 {
   "name": "cbb-governance-dashboard",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "description": "CBB catalogue and full lifecycle management interactive prototype",
   "scripts": {
     "build": "python -X utf8 build.py",
-    "test": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs tests/feedback.test.cjs",
+    "test": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs tests/feedback.test.cjs tests/experience.test.cjs",
     "test:browser": "node scripts/test-journeys.cjs",
-    "test:feedback": "node scripts/test-feedback-browser.cjs"
+    "test:feedback": "node scripts/test-feedback-browser.cjs",
+    "test:experience": "node scripts/test-experience-browser.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

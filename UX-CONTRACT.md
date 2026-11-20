@@ -48,3 +48,19 @@ src/governance.js 是使用、响应、维护信号、版本依赖和复审命�
 维护信号必须能打开带负责人及期限的复审；试点关联原记录，关闭要检查使用证据。保留必须有理由及下次复审日期。贡献方案只接受 HTTPS。依赖只能改草稿，修改后制品及测试须重验。演示身份切换明确区别真实登录；命令层校验权限，错误保留输入。新增流程验证由 scripts/test-feedback-browser.cjs 承接。
 
 复审按去重项目身份验证新增复用，不以新增 USE 行冒充成果。重复保存试点更新同一活跃记录；转向保留、核实或收敛会中止原试点并记录原因。关闭问题或验证失败需使用方代表，受理及交验证需维护负责人，审计展示所选身份的真实角色。所有仍可接入的已发布版本以及有活跃项目的已废弃版本都能阻塞其依赖退役。领域图遍历不受图形展示层数限制。
+
+
+## Quick interaction owners
+
+| Capability | Canonical owner | Behavior | Evidence |
+|---|---|---|---|
+| Command palette | experience.js / #experience-dialog.xp-palette | Ctrl/Command K, Arrow navigation, Enter, IME-safe filtering, Escape and focus restore | scripts/test-experience-browser.cjs |
+| Component preview drawer | Same #experience-dialog.xp-preview native modal | Facts from experience-model.js shared governance selectors; close before shared navigation | scripts/test-experience-browser.cjs |
+| Hero relationship map | experience-model.js network / experience.js hero | Exact recommended snapshot edges; pointer and focus highlights; ordinary version links | tests/experience.test.cjs |
+| Motion | experience.css shared tokens | 160/260ms, 300ms drawer; reduced-motion disables movement | browser reduced-motion checks |
+| Query clear and active filters | experience.js action → existing navigate | Clear one parameter and reset page; preserve remaining filters; return search focus | browser URL checks |
+
+Existing #modal / #confirm-dialog form and confirmation ownership is unchanged. A pending modal form blocks the command shortcut. Preview and palette contain no mutations, do not persist a second copy of component state, and never shadow unsaved form input. Search Enter submission keeps its existing catalogue behavior. All dynamically inserted buttons route through the one CBB_UI command handler; native modal focus and Escape are explicitly restored. Palette empty state is non-actionable, not a fake suggestion. No server or identity behavior is added.
+
+
+Final review corrections: preview receives both id and version from the catalogue row; palette input owns Arrow/Enter logic while other buttons retain native Enter activation. Browser forward/back restores the displayed history entry before asking whether to abandon unsaved input; cancel keeps route, form and values. Unknown legacy history entries use URL restoration before a confirmed replace navigation. The short captioned demo is a regular MP4 link in guide/footer and uses the browser's video controls.

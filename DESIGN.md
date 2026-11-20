@@ -9,6 +9,7 @@ colors:
   muted: "#647584"
   line: "#DFE5EA"
   nav: "#182C3D"
+  on-nav: "#EEF6FF"
   success: "#1C7050"
   warning: "#9B5310"
   danger: "#B23543"
@@ -91,3 +92,16 @@ components:
 ## Adoption and maintenance revision
 
 货架默认复用排序；项目与团队名称提供使用证据。健康信号为事实与动作入口，不做综合打分或大数字面板。使用量以小字和清晰范围呈现；状态、Owner、最近维护先于次要标签。筛选统一大热区 radio，并按 dimensions 折叠。详情补业务场景、使用与维护、具名变更记录。治理工作台用列表承接信号、负责人、期限和验证结果。G6 节点按版本分行，虚线表示共享引用；颜色在挂载时读取 CSS 语义 token，切主题重建，不维护另一套硬编码色板。
+
+
+## Product motion and quick interaction revision · 2026-11-20
+
+Current user request extends the pub.dev shelf with a more memorable, mature interaction layer. Signature: an interactive, data-backed capability relationship map in the navy search header, not a metrics dashboard. Five actual recommended snapshots use their exact dependency edges. Hover/focus lights the connected paths; keyboard and pointer activate ordinary version links. The map is omitted below 800px so discovery remains primary.
+
+Palette stays navy / blue / white: nav #182C3D, primary #0868C9, surface #FFFFFF, bg #F5F7F9, text #253746. Existing DESIGN frontmatter remains the color/font token authority. New visual treatments derive via CSS semantic variables and color-mix; no independent hardcoded accent palette. Hero title 42px/31px, node labels 11px, catalogue package title 22px, normal body retains existing system face. Compact data uses the existing monospace role.
+
+experience.css owns shared motion tokens: fast 160ms, enter 260ms, easing cubic-bezier(.2,.8,.2,1); drawer enter 300ms. Content enters once with 7px travel, buttons/rows acknowledge hover and focus, dialogs ease into place, connected map edges flow only during hover/focus. Reduced-motion disables movement. No sounds, camera effects, fake counters, particles, or continuous decorative animations.
+
+Quick interaction variants: Ctrl/Command K opens the native-dialog palette with keyboard and IME-safe search; a native-dialog side drawer previews the same component/version/usage facts as details. Removable filters and explicit query clear preserve committed URL state. The catalogue stays a text-led list, with previews on hover/focus and visible controls on touch. Mature transitions and responsiveness carry the visual change; not a wholesale game-style reskin.
+
+Inverse navigation text token: colors.on-nav (#EEF6FF) is fixed light ink on the navy header in either theme; it is not the theme-dependent surface token. Motion snapshots wait for entrance completion; no content remains faded after settling.

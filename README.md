@@ -37,3 +37,12 @@ node scripts/test-feedback-browser.cjs
 - [AntV G6 紧凑树](https://g6.antv.antgroup.com/zh/examples/layout/compact-box/basic/)
 
 本项目用于产品方案验证，不是任何公司的生产案例。
+
+
+## Product interaction revision
+
+The search header now includes a data-backed interactive relationship map. Ctrl/Command K opens component/page search; catalogue rows open an exact-version preview drawer. Active filters and query clear preserve URL state. Native dialogs, button keyboard activation, browser back/forward draft protection, light/dark themes and reduced-motion are verified. This borrows the immediate feedback and continuity of [fable-arcade](https://github.com/sorrycc/fable-arcade), while preserving the developer catalogue's job; no game source/assets copied.
+
+[Watch the 90-second captioned product demo](https://capilot-flow.github.io/cbb-governance-dashboard/assets/demo/cbb-atlas-90s.mp4). This is a silent 1920×1080 real browser recording with 52px burned-in Chinese captions and fictional prototype data. The complete local cut also demonstrates migration/retirement. Guide and footer provide the short video entrance.
+
+New checks: `node --test tests/experience.test.cjs` and `node scripts/test-experience-browser.cjs`.

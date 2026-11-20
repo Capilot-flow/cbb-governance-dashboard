@@ -20,13 +20,14 @@
     "browser"
   ],
   "commands": {
-    "unit": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs tests/feedback.test.cjs",
-    "browser": "node scripts/test-journeys.cjs && node scripts/test-feedback-browser.cjs"
+    "unit": "node --test tests/lifecycle.test.cjs tests/storage.test.cjs tests/feedback.test.cjs tests/experience.test.cjs",
+    "browser": "node scripts/test-journeys.cjs && node scripts/test-feedback-browser.cjs && node scripts/test-experience-browser.cjs"
   },
   "evidence": {
     "domain": "tests/lifecycle.test.cjs",
     "failurePaths": "scripts/test-journeys.cjs",
     "storage": "tests/storage.test.cjs",
-    "governance": "tests/feedback.test.cjs"
+    "governance": "tests/feedback.test.cjs",
+    "experience": "scripts/test-experience-browser.cjs"
   }
 }
